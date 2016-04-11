@@ -7,9 +7,8 @@ function urlService (db) {
   this.createUrl = function (req, res) {
 		
 		var inputUrl = req.params[0],
-			urlSyntaxTest = /https?:\/\/www\.\w+\.(com|net|org|co)/,
+			urlSyntaxTest = /^https?:\/\/www\.\w+\.(com|net|org|co)(:\d{1,5})?$/,
 			finalUrlConversion = {},
-			returnObj = {},
 			randomNumber;
 
 		randomNumber = function randomNumber () {
@@ -38,29 +37,36 @@ function urlService (db) {
 			finalUrlConversion.originalUrl = inputUrl;
 			finalUrlConversion.shortUrl = randomNumber();
 
-			urls.insertOne(finalUrlConversion, function(err, result) {
+			urls.insertOne(finalUrlConversion, {forceServerObjectId: true}, function(err, result) {
 				if (err) {
 	        throw err;
 	      }
 	      else {
-	      	// build the reply object and send it back
-	      	returnObj.originalUrl = finalUrlConversion.originalUrl;
-	      	returnObj.shortUrl = finalUrlConversion.shortUrl
-					
-					res.send(returnObj);
+					res.send(finalUrlConversion);
 	      }
 			});
 		}
 
 		else {
-	  	res.send('bad url')
+	  	res.send('not a valid url for this service')
   	}
   }
 
   this.getUrl = function(req, res) {
-		var inputUrl = req.params.shortUrl;
-  	
-  	res.send(inputUrl)
+		var inputUrl = Number(req.params.shortUrl),
+			search = { shortUrl: inputUrl };
+
+		urls.find(search).limit(1).next(function(err, result){
+			if (err) {
+        throw err;
+      }
+      else if (!result) {
+      	res.send('invalid short url')
+      }
+      else {
+      	res.redirect(result.originalUrl);
+      }
+		})
   }
 }
 
