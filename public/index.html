@@ -7,22 +7,29 @@
     <body>
         <div class="container">
             <h1>
-                Free Code Camp - API Basejump: URL Shortener Microservice
+                <p>URL Shortener Microservice</p>
+                <p><span class="small">Free Code Camp &mdash; API Project</span></p>
             </h1>
             <blockquote>
-                <p><strong>User Story:</strong> I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.</p>
+                <p><strong>User Stories</strong></p>
+                <ul>
+                    <li> I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.</li>
 
-                <p><strong>User Story:</strong> If I pass an invalid URL that doesn't follow the valid http(s)://www.example.com format, the JSON response will contain an error instead.</p>
+                    <li> If I pass an invalid URL that doesn't follow the valid http(s)://www.example.com format, the JSON response will contain an error instead.</li>
 
-                <p><strong>User Story:</strong> When I visit that shortened URL, it will redirect me to my original link.</p>
+                    <li> When I visit that shortened URL, it will redirect me to my original link.</li>
+                </ul>
             </blockquote>
-            <h4>Example usage: create new short url</h4>
+            <h3>Example usage: Create new short url:</h3>
             <code>
             	http://url-shortify.herokuapp.com/new/&lt;your url to be shortified&gt;
             </code>
           	<p>
             	<strong>&lt;your url to be shortified&gt;</strong> can be http or https and .com, org, net, or co. Optional, specify any port up to 5 digits. Returns shortened url
             </p>
+            <h3>Example usage: Use it:</h3>
+            <code>
+                http://url-shortify.herokuapp.com/<strong>&lt;your returned short url&gt;</strong>
             
         </div>
     </body>
